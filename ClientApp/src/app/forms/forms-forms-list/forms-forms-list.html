@@ -1,0 +1,66 @@
+<div class="forms-container">
+
+  <h2>טפסים קיימים</h2>
+
+  <div *ngIf="formsStore.loading()">
+    טוען טפסים...
+  </div>
+
+  <div *ngIf="!formsStore.loading() && formsStore.forms().length === 0">
+    אין טפסים להצגה
+  </div>
+
+  <table *ngIf="!formsStore.loading() && formsStore.forms().length > 0">
+
+    <thead>
+      <tr>
+        <th>מזהה</th>
+        <th>שם הטופס</th>
+        <th>נוצר על ידי</th>
+        <th>תאריך יצירה</th>
+        <th>מספר שדות</th>
+        <th>שלבי אישור</th>
+      </tr>
+    </thead>
+
+    <tbody>
+
+      <tr *ngFor="let form of formsStore.forms()">
+
+        <td>
+          {{ form.id }}
+        </td>
+
+        <td>
+          <a [routerLink]="['/forms', form.id]">
+            {{ form.name }}
+          </a>
+        </td>
+
+        <td>
+          {{ form.createdBy }}
+        </td>
+
+        <td>
+          {{ form.createdAt | date:'dd/MM/yyyy HH:mm' }}
+        </td>
+
+        <td>
+          {{ form.fields?.length || 0 }}
+        </td>
+
+        <td>
+          {{ form.approvalSteps?.length || 0 }}
+        </td>
+
+      </tr>
+
+    </tbody>
+
+  </table>
+
+  <button routerLink="/forms/new">
+    + יצירת טופס חדש
+  </button>
+
+</div>

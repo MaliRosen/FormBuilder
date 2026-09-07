@@ -1,0 +1,131 @@
+<div class="form-container">
+
+  <h2>יצירת טופס חדש</h2>
+
+  <form [formGroup]="form" (ngSubmit)="submit()">
+
+    <div class="form-group">
+      <label>שם הטופס</label>
+
+      <input
+        type="text"
+        formControlName="name"
+        placeholder="לדוגמה: טופס קליטת עובד">
+    </div>
+
+    <div class="form-group">
+      <label>נוצר על ידי</label>
+
+      <input
+        type="text"
+        formControlName="createdBy"
+        placeholder="שם המשתמש">
+    </div>
+
+
+    <!-- שדות הטופס -->
+
+    <div class="section">
+
+      <div class="section-header">
+        <h3>שדות הטופס</h3>
+
+        <button
+          type="button"
+          (click)="addField()">
+          + הוסף שדה
+        </button>
+      </div>
+
+      <div formArrayName="fields">
+
+        <div
+          class="dynamic-row"
+          *ngFor="let field of fields.controls; let i = index"
+          [formGroupName]="i">
+
+          <input
+            type="text"
+            formControlName="label"
+            placeholder="שם השדה">
+
+          <select formControlName="fieldType">
+            <option value="text">טקסט</option>
+            <option value="date">תאריך</option>
+          </select>
+
+          <button
+            type="button"
+            (click)="removeField(i)">
+            מחק
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- שלבי אישור -->
+
+    <div class="section">
+
+      <div class="section-header">
+        <h3>שלבי אישור</h3>
+
+        <button
+          type="button"
+          (click)="addApprovalStep()">
+          + הוסף שלב
+        </button>
+      </div>
+
+      <div formArrayName="approvalSteps">
+
+        <div
+          class="approval-row"
+          *ngFor="let step of approvalSteps.controls; let i = index"
+          [formGroupName]="i">
+
+          <span class="step-number">
+            {{ i + 1 }}
+          </span>
+
+          <input
+            type="text"
+            formControlName="stepName"
+            placeholder="שם השלב">
+
+          <input
+            type="text"
+            formControlName="approver"
+            placeholder="מאשר">
+
+          <select formControlName="actionType">
+            <option value="Approve">אישור</option>
+            <option value="Reject">דחייה</option>
+          </select>
+
+          <button
+            type="button"
+            (click)="removeApprovalStep(i)">
+            מחק
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <button
+      type="submit"
+      [disabled]="form.invalid">
+      שמור טופס
+    </button>
+
+  </form>
+
+</div>

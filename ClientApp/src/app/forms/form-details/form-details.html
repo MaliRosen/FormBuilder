@@ -1,0 +1,82 @@
+<div class="details-container">
+
+  <div *ngIf="loading">
+    טוען טופס...
+  </div>
+
+  <div *ngIf="error">
+    {{ error }}
+  </div>
+
+  <div *ngIf="form && !loading">
+
+    <div class="header">
+      <h2>{{ form.name }}</h2>
+
+      <a routerLink="/forms">
+        ← חזרה לרשימת הטפסים
+      </a>
+    </div>
+
+    <div class="info">
+      <p>
+        <strong>נוצר על ידי:</strong>
+        {{ form.createdBy }}
+      </p>
+
+      <p>
+        <strong>תאריך יצירה:</strong>
+        {{ form.createdAt | date:'dd/MM/yyyy HH:mm' }}
+      </p>
+    </div>
+
+    <section>
+      <h3>שדות הטופס</h3>
+
+      <div *ngIf="form.fields?.length === 0">
+        אין שדות בטופס
+      </div>
+
+      <div
+        class="field-row"
+        *ngFor="let field of form.fields">
+
+        <span>{{ field.label }}</span>
+        <span>{{ field.fieldType }}</span>
+
+      </div>
+    </section>
+
+    <section>
+      <h3>שלבי אישור</h3>
+
+      <div *ngIf="form.approvalSteps?.length === 0">
+        אין שלבי אישור
+      </div>
+
+      <div
+        class="step-row"
+        *ngFor="let step of form.approvalSteps">
+
+        <span class="step-number">
+          {{ step.stepOrder }}
+        </span>
+
+        <span>
+          {{ step.stepName }}
+        </span>
+
+        <span>
+          מאשר: {{ step.approver }}
+        </span>
+
+        <span>
+          {{ step.actionType }}
+        </span>
+
+      </div>
+    </section>
+
+  </div>
+
+</div>
